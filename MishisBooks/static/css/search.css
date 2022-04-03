@@ -1,0 +1,42 @@
+
+
+.container {
+  display: flex;
+  min-height: 70vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/*tamaño de la imagen*/
+
+.search img {
+  max-width: 12rem;
+  min-height: auto;
+}
+
+/*cuadrado de fondo*/
+
+.search {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #2222229c;
+  padding: 2rem;
+  box-shadow: -2px 4px 31px #00000069;
+  border-radius: 10px;
+}
+
+/*tamaño del input*/
+.search input {
+  margin: 1rem 0;
+  width: 20rem;
+}
+
+/* bajandole el ancho a la barra de busqueda */
+
+@media (max-width: 800px) {
+  .search input {
+    width: 90%;
+  }
+}

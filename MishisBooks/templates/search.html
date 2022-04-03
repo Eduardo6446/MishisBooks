@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{%block title%}Search{%endblock%}
+
+{% block template %}
+
+<link
+  rel="stylesheet"
+  href="{{ url_for('static',filename='css/search.css')}}"
+/>
+
+<!--dejo aqui este porque en el css no carga (o no me acuerdo como era XD)-->
+
+<style>
+  body{
+  background-image: linear-gradient(to right,rgba(13, 6, 54, 0.219), rgba(43, 5, 5, 0.123)),url("{{url_for('static',filename='img/fondo.jpg')}}");
+  }
+</style>
+<div class="container">
+  <form action="/books">
+    <div class="search">
+      <img src="{{url_for('static',filename='img/logoTemporal2.png')}}" alt="logo" />
+
+      <input
+        type="text" class="form-control" name="search" placeholder="Buscar libro" required/>
+      <button class="btn">Buscar</button>
+    </div>
+  </form>
+  
+  <div>
+    {%endblock%}
+  </div>
+</div>
