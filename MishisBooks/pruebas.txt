@@ -1,0 +1,29 @@
+"""
+def get_goodreads_data(isbn):
+    response = requests.get("https://www.goodreads.com/book/review_counts.json", params={ "isbns": isbn})
+    value = response.json().get('books')[0]
+    count = value.get('work_ratings_count')
+    rating = value.get('average_rating')
+    return [count,rating]
+
+"""
+
+"""
+def get_review_statistics(book_id):
+    res = db.execute("SELECT count(review),round(avg(rating),2) FROM review where book_id=:id;",{'id':book_id}).fetchone()
+    return [res.count,float(str(res.round))]
+
+"""
+
+
+"""
+def ratingGoogleApi(isbn):
+
+    isbn
+    response = requests.get("https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn).json()
+
+    count = response['items'][0]['volumeInfo']['ratingsCount']
+    rating = response['items'][0]['volumeInfo']['averageRating']
+    libroImage = response['items'][0]['volumeInfo']['imageLinks']['thumbnail']
+    return [count,rating,libroImage]
+"""
