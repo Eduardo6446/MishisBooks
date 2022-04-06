@@ -13,10 +13,10 @@
       <input
         type="text"
         class="form-control"
-        placeholder="Search your Book"
+        placeholder="Buscar"
         name="search"
       />
-      <div><button class="btn">Search</button></div>
+      <div><button class="btn">Buscar</button></div>
     </div>
   </form>
 
@@ -30,8 +30,8 @@
       {% if not(error) %}
       <div class="rating">
         <img
-          src="{{url_for('static',filename='img/goodreads.png')}}"
-          alt="logo"
+          src="{{url_for('static',filename='img/logoTemporal2.png')}}"
+          alt="logoTemporal2"
         />
         <p align="center">
           Rating {{rating}} / 5 by {{count}} people
@@ -79,9 +79,8 @@
     {%elif not( session['logged_in'])%}
     <hr />
     <div class="login-msg">
-      <a href="{{url_for('login', next=obj_book.isbn)}}">Login</a> or
-      <a href="{{url_for('signup',next=obj_book.isbn)}}">Sign up</a> To give
-      your review
+      <a href="{{url_for('login', next=obj_book.isbn)}}">Inicia sesion</a> o
+      <a href="{{url_for('signup',next=obj_book.isbn)}}">Registrate</a> para continuar
     </div>
     <hr />
     {% endif%}
@@ -96,7 +95,7 @@
       {%endfor%} {%endif%}
     </div>
     {%else%}
-    <div class="error">404 Not Found</div>
+    <div class="error">404 No encontrado</div>
     {%endif%}
   </div>
 </div>

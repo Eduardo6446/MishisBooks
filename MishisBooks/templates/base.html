@@ -22,20 +22,20 @@
   </head>
 
   <body>
-    <nav >
+    <nav class="navbar navbar-dark bg-primary">
       <ul>
         {% if session['logged_in']%}
         <li>
           <a href="#">Bienvenido, {{session['username']}}</a>
         </li>
         {% endif %}
-        <li><a href="{{url_for('search')}}">Search</a></li>
+        <li><a href="{{url_for('search')}}">Buscar</a></li>
         <li><a href="{{url_for('api')}}">API</a></li>
         {% if not session['logged_in']%}
-        <li><a href="{{url_for('login')}}">Login</a></li>
-        <li><a href="{{url_for('signup')}}">Sign up</a></li>
+        <li><a href="{{url_for('login')}}">inicia Sesion</a></li>
+        <li><a href="{{url_for('signup')}}">Registrate</a></li>
         {%else%}
-        <li><a href="{{url_for('logout')}}">Logout</a></li>
+        <li><a href="{{url_for('logout')}}">Cerrar sesion</a></li>
         {% endif %}
       </ul>
     </nav>
