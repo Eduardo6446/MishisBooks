@@ -27,7 +27,19 @@ Session(app)
 engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
 
+def ratingGoogleApi(isbn):
 
+    isbn
+    response = requests.get("https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn).json()
+
+    count = response['items'][0]['volumeInfo']['ratingsCount']
+    rating = response['items'][0]['volumeInfo']['averageRating']
+    libroImage = response['items'][0]['volumeInfo']['imageLinks']['thumbnail']
+    return [count,rating,libroImage]
+
+def get_review_statistics(book_id):
+    res = db.execute("SELECT count(review),round(avg(rating),2) FROM review where book_id=:id;",{'id':book_id}).fetchone()
+    return [res.count,float(str(res.round))]
 
 def password_hash(password):
     salt = "27a0091dee99016f8fb6599da096feff"
@@ -35,22 +47,7 @@ def password_hash(password):
     hashed_password = hashlib.md5(slat_password.encode())
     return hashed_password.hexdigest()
 
-"""
-def get_goodreads_data(isbn):
-    response = requests.get("https://www.goodreads.com/book/review_counts.json", params={ "isbns": isbn})
-    value = response.json().get('books')[0]
-    count = value.get('work_ratings_count')
-    rating = value.get('average_rating')
-    return [count,rating]
 
-"""
-
-"""
-def get_review_statistics(book_id):
-    res = db.execute("SELECT count(review),round(avg(rating),2) FROM review where book_id=:id;",{'id':book_id}).fetchone()
-    return [res.count,float(str(res.round))]
-
-"""
   
 @app.route("/")
 def search():
@@ -161,8 +158,8 @@ def book(isbn):
         except:
             pass
     try:
-        #count,rating = get_goodreads_data(isbn)
-        count,rating = get_goodreads_data(isbn)
+        count,rating = ratingGoogleApi(isbn)
+        
     except:
         error = True
         count,rating = 0,0
@@ -184,7 +181,6 @@ def api_url(isbn):
             "Message": "See documentation at '/api'"
             }),404
     try:
-        #count,rating = get_review_statistics(res.id)
         count,rating = get_review_statistics(res.id)
 
     except:
@@ -198,8 +194,7 @@ def api_url(isbn):
         "review_count": count,
         "average_score": rating
     }),200
-
-
+    
 
 @app.route("/logout")
 def logout():
