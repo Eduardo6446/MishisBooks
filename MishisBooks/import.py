@@ -3,86 +3,16 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 import os
 import csv
 
-engine = create_engine(os.getenv("DATABASE_URL"))
+engine = create_engine(os.getenv("postgresql://nqcfaquakesvau:b66550b48e768d6aa2e69054aa3806f322acd35b77e5c00ccdf9af85d634e661@ec2-44-194-92-192.compute-1.amazonaws.com:5432/d9ef2rp1qjtohv"))
 
 db = scoped_session(sessionmaker(bind=engine)) 
 
 
-def add_books():
-    """Add Books to databse"""
-    global db
-    with open('books.csv','r') as file:
-        books = csv.reader(file)
-        next(books)
-        i = 0
-        limit = 100
-        for isbn, title,author, year in books:
-            db.execute("insert into books (isbn, title, author, year) values (:isbn, :title, :author, :year);",{'isbn':isbn, 'title':title, 'author':author, 'year':year})
-            print(i+1,title,"uploadeding...")
-            i+=1
-            if i==limit:
-                db.commit()
-                print("\nuploaded",limit,"books\n")
-                limit += 100
-                
-                
-        db.commit()
-        file.close()
-        print("Uploading Finished.Total uploaded",i)
+f = open("books.csv")
+reader = csv.reader(f)
 
-
-def create_user_table():
-    """Create User Table"""
-    global db
-    create_user_table = """
-    CREATE TABLE users (
-          id SERIAL PRIMARY KEY,
-          username VARCHAR NOT NULL unique,
-          password VARCHAR NOT NULL
-      );
-    """
-    db.execute(create_user_table)
+for isbn, title, author, year in reader:
+    db.execute("INSERT INTO books (isbn, title, author, publishyear) VALUES (:isbn, :title, :author, :year)",
+            {"isbn": isbn, "title": title, "author": author, "year": year})
     db.commit()
-    print("User Table Created")
-
-
-def create_book_table():
-    """Create Book Table"""
-    global db
-    create_book_table = """
-    CREATE TABLE books (
-          id SERIAL PRIMARY KEY,
-          isbn VARCHAR NOT NULL,
-          title VARCHAR NOT NULL,
-          author VARCHAR NOT NULL,
-          year VARCHAR NOT NULL
-      );
-    """
-    db.execute(create_book_table)
-    db.commit()
-    print("Book Table Created")
-
-def create_review_table():
-    """Create review Table"""
-    global db
-    create_book_table = """
-    CREATE TABLE review (
-          id SERIAL PRIMARY KEY,
-          username VARCHAR NOT NULL,
-          review VARCHAR NOT NULL,
-          rating INTEGER NOT NULL,
-          book_id INT NOT NULL
-      );
-    """
-    db.execute(create_book_table)
-    db.commit()
-    print("Review Table Created")
-
-
-if __name__ == '__main__':
-    create_user_table()
-    create_book_table()
-    create_review_table()
-    add_books()
-    
-
+print("yap")
