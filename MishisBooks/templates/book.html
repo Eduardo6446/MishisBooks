@@ -1,13 +1,21 @@
-{%extends 'base.html'%} {%block title%}{% if obj_book %}{{obj_book.title}} |
-{{obj_book.author}}{%endif%}{%endblock%}{%block template%}
+{%extends 'base.html'%}
+{%block title%}
+
+{% if obj_book %}
+
+{{obj_book.title}} | {{obj_book.author}}{%endif%}
+
+{%endblock%}
+
+{%block template%}
 <link rel="stylesheet" href="{{ url_for('static',filename='css/book.css')}}" />
 <div class="main">
   <form action="/books">
     <div class="search-box">
       <div>
         <a href="{{url_for('search')}}">
-          <img src="{{url_for('static',filename='img/logoTemporal.png')}}" alt="logo"
-        /></a>
+          <img src="{{url_for('static',filename='img/Log.png')}}" alt="logoTemporal2" />
+        </a>
       </div>
 
       <input
@@ -30,11 +38,11 @@
       {% if not(error) %}
       <div class="rating">
         <img
-          src="{{url_for('static',filename='img/logoTemporal2.png')}}"
+          src="{{url_for('static',filename='img/api.png')}}"
           alt="logoTemporal2"
         />
         <p align="center">
-          Rating {{rating}} / 5 by {{count}} people
+          Rating {{rating}} / 5 de {{count}} personas
         </p>
       </div>
       {%endif%}
@@ -62,13 +70,7 @@
           </div>
           <div class="form-group mt-4 mx-4">
             <label for="exampleFormControlTextarea1">Review</label>
-            <textarea
-              class="form-control"
-              id="exampleFormControlTextarea1"
-              rows="2"
-              name="review"
-              placeholder="Write your review..."
-            ></textarea>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="review" placeholder="Escribe tu reseña ;3"></textarea>
           </div>
         </div>
         <div class="button">
@@ -80,7 +82,7 @@
     <hr />
     <div class="login-msg">
       <a href="{{url_for('login', next=obj_book.isbn)}}">Inicia sesion</a> o
-      <a href="{{url_for('signup',next=obj_book.isbn)}}">Registrate</a> para continuar
+      <a href="{{url_for('signup',next=obj_book.isbn)}}">Registrate</a> para comentar este libro
     </div>
     <hr />
     {% endif%}

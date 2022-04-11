@@ -1,0 +1,77 @@
+.login-box {
+    max-width: 20rem;
+    background-color: #2727279c;
+    padding: 2rem;
+    box-shadow: -2px 4px 31px #00000069;
+}
+  
+.login-box h3,.login-box label {
+    color: #fff;
+}
+  
+.login form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.error {
+    color: #fff;
+    background-image: linear-gradient(to right, #771d32cc, #e65758bf);
+    border-radius: 6px;
+    padding: 0.4rem;
+    margin: 0.3rem 0;
+    text-align: center;
+}
+
+
+.mycontainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0 2rem;
+}
+  
+.right {
+    display: flex;
+    min-height: 80vh;
+    min-width: 200vh;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width: 800px) {
+    
+    .mycontainer {
+      display: flex;
+      justify-content: center;
+    }
+}
+
+
+.btn,
+.btn:hover {
+  background-color: rgb(1, 67, 189);
+  color: #fff;
+  outline: none !important;
+}
+
+.btn:focus {
+  box-shadow: 0 0 0 0.2rem rgb(255, 255, 255);
+}
+
+.form-control,
+.form-control:active,
+.form-control:focus {
+  background-color: #3535354f;
+  color: #fff;
+}
+
+.form-control:focus {
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 0.2rem rgb(1, 67, 189);
+}
+
+.form-control::placeholder {
+  color: #fff;
+  opacity: 0.5;
+}

@@ -5,17 +5,22 @@ import json
 
 #bookName = input("Enter Book Name: ")
 
-isbn='080213825X'
+isbn='0425285049'
 response = requests.get("https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn).json()
 
 book = response['items'][0]['volumeInfo']['averageRating']
 book2 = response['items'][0]['volumeInfo']['ratingsCount']
-libroImage = response['items'][0]['volumeInfo']['imageLinks']['thumbnail']
+libroImage = response['items'][0]['volumeInfo']['description']
 #count = book.get('ratingsCount')
 #rating = book.get('average_rating')
 print(book)
 print(book2)
 print(libroImage)
+
+#book = book + 2
+#print(book)
+#book2 = book2 + 2
+#print(book2)
 #result = requests.get("https://www.googleapis.com/books/v1/volumes?q=" + bookName)
 
 #book = result.json()

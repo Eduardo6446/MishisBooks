@@ -1,5 +1,7 @@
 {% extends 'base.html' %} {%block title%}Login{%endblock%} {% block template %}
 
+<link rel="stylesheet" href="{{ url_for('static',filename='css/loginRegister.css')}}" />
+
 <style>
   body {
     background-image: linear-gradient(
@@ -11,40 +13,32 @@
   }
 </style>
 <div class="mycontainer">
-  <div class="left">
-    <div>
-      <a href="{{url_for('search')}}">
-        <img src="{{url_for('static',filename='img/logoTemporal2.png')}}" alt="logo"
-      /></a>
-      <h2>Book Review & Rating</h2>
-    </div>
-  </div>
   <div class="right">
     <div class="login-box">
-      <h3 align="center">Login</h3>
+      <h3 align="center">Iniciar Sesion</h3>
       {% if message %}
       <div class="error">{{message}}</div>
       {%endif%}
       <div class="login">
         <form method="POST" action="{{ url_for('login', next=next) }}">
           <div class="form-group">
-            <label for="exampleInputEmail1">Username</label>
+            <label for="exampleInputEmail1">Usuario</label>
             <input
               type="text"
               class="form-control"
               id="exampleInputEmail1"
-              placeholder="Enter Username"
+              placeholder="Usuario"
               name="username"
               required
             />
           </div>
           <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
+            <label for="exampleInputPassword1">Contraseña</label>
             <input
               type="password"
               class="form-control"
               id="exampleInputPassword1"
-              placeholder="Enter Password"
+              placeholder="Contraseña"
               name="password"
               required
             />

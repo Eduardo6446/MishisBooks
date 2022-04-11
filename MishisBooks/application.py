@@ -29,16 +29,16 @@ db = scoped_session(sessionmaker(bind=engine))
 
 def ratingGoogleApi(isbn):
 
-    isbn
     response = requests.get("https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn).json()
 
     count = response['items'][0]['volumeInfo']['ratingsCount']
     rating = response['items'][0]['volumeInfo']['averageRating']
-    libroImage = response['items'][0]['volumeInfo']['imageLinks']['thumbnail']
-    return [count,rating,libroImage]
+    return [count,rating]
 
-def get_review_statistics(book_id):
+def get_review_statistics(book_id,isbn):
+    
     res = db.execute("SELECT count(review),round(avg(rating),2) FROM review where book_id=:id;",{'id':book_id}).fetchone()
+    
     return [res.count,float(str(res.round))]
 
 def password_hash(password):
@@ -50,12 +50,15 @@ def password_hash(password):
 
   
 @app.route("/")
+def index():
+    res = db.execute("select * from books LIMIT 12")
+    return render_template("index.html",res=res)
+
+
+@app.route("/search")
 def search():
     return render_template('search.html')
-
-
  
-
 @app.route("/login",methods=['GET','POST'])
 def login():
     isbn = request.args.get('next')
@@ -64,7 +67,7 @@ def login():
         password = request.form.get('password')
         user = db.execute("select * from users where username=:username and password=:password;",{'username':username,'password':password_hash(password)})
         if user.rowcount == 0:
-            return render_template('login.html',message="Wrong Username or Password.")
+            return render_template('login.html',message="El usuario o la contraseña son incorrectos")
         session['logged_in'] = True
         session['username'] = request.form['username']
         if isbn:
@@ -81,7 +84,7 @@ def signup():
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
         if password1!=password2:
-            return render_template('signup.html',message="Password did not match.")
+            return render_template('signup.html',message="Ingrese correctamente las contraseñas")
            
         try:
             password = password_hash(password1)
@@ -93,7 +96,7 @@ def signup():
                 return redirect(url_for("book",isbn=isbn))
             return redirect(url_for("search"))
         except:
-            return render_template('signup.html',message="Username Exists. Try Another.")
+            return render_template('signup.html',message="Este usuario ya existe")
     return render_template('signup.html',next=isbn)
 
 
@@ -106,7 +109,7 @@ def books():
         obj_books = db.execute("select * from books where isbn LIKE ('%"+q+"%')  or lower(title) LIKE lower('%"+q+"%') or  lower(author) LIKE lower('%"+q+"%') or year LIKE ('%"+q+"%') order by year desc;").fetchall() 
         count = len(obj_books)
         if count == 0:
-            return render_template('books.html',q=q,count=count,message="404 Not Found")
+            return render_template('books.html',q=q,count=count,message="404 No encontrado")
 
 
         
@@ -177,12 +180,12 @@ def api_url(isbn):
     res = db.execute("select * from books where isbn=:isbn;",{'isbn':isbn}).fetchone()
     if res == None:
         return jsonify({
-            "error": "Invalid isbn.",
-            "Message": "See documentation at '/api'"
+            "error": "isbn Invalido.",
+            "Message": "Puede ver la documentacion en '/api' :D"
             }),404
     try:
-        count,rating = get_review_statistics(res.id)
-
+        count,rating = ratingGoogleApi(isbn)
+        
     except:
         count,rating = 0,0
     

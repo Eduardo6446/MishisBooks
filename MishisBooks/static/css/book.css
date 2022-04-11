@@ -7,13 +7,12 @@ nav {
   justify-content: center;
   max-width: 26rem;
   margin: 0.8rem;
-  position: absolute;
   top: 0;
   left: 1.1rem;
 }
 
 .search-box div img {
-  max-width: 3rem;
+  max-width: 4rem;
   max-height: auto;
 }
 
@@ -46,7 +45,7 @@ nav {
   color: #372213;
 }
 .rating img {
-  max-width: 7rem;
+  max-width: 3.5rem;
   height: auto;
   margin-bottom: 0.5rem;
 }

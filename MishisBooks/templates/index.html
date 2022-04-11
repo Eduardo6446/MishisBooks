@@ -1,31 +1,125 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Index
+    MishisBooks
 {% endblock %}
 
-{% block main %}
+{% block template %}
     
     <link rel="stylesheet" href="{{ url_for('static',filename='css/index.css')}}">
-    
+
+
     <header class="masthead">
         <div class="container h-100">
-        <div class="row h-100 align-items-center">
+          <div class="row h-100 align-items-center">
             <div class="col-12 text-center">
-            <h1 class="fw-light">Bienvenido</h1>
+                <img class="indexlog" src="{{url_for('static',filename='img/Log.png')}}" alt="logoTemporal2" />
+              <h1 class="fw-light">Bienvenido a MishisBooks</h1>
+              <p class="lead">Busca y puntua tus libros en un solo lugar :D</p>
             </div>
-        </div>
+          </div>
         </div>
     </header>
-
-    <!-- Page Content -->
-    <section class="py-5">
-        <div class="container">
-            <h2 class="fw-light">Page Content</h2>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci sint delectus inventore quae, illum consectetur dicta, magni suscipit sit eligendi aliquid nemo natus commodi corporis quasi sapiente magnam. Voluptate incidunt numquam architecto repellat laudantium autem officia sunt exercitationem! Dignissimos voluptatem eaque rerum dolor deleniti sapiente. Ipsam repellendus eaque asperiores recusandae maxime delectus, eos, nulla ducimus totam ipsa deleniti vitae qui dolorum optio accusantium ratione voluptate iste consequuntur rem doloremque doloribus libero soluta? Sed numquam minima ratione mollitia temporibus autem cupiditate laudantium delectus architecto pariatur! Delectus expedita praesentium molestias recusandae sunt, dolorem nostrum eum alias nisi vero, hic dolorum cumque ipsa.</p>
-        
+    <section class="about_section layout_padding">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="about_detail-box">
+              <h3 class="text-uppercase">
+                Muchos Libros!
+              </h3>
+              <p>
+                Tenemos mas de 5000 libros disponibles para comentar y puntuar en nuestra plataforma :D
+              </p>
+              <a class="btn btn-primary" href="{{ url_for('search') }}" role="button">Busca tu libro :D</a>
+              
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="about_img-box">
+            <img src="{{ url_for('static',filename='img/lib.png')}}" alt="">
+            </div>
+          </div>
         </div>
+      </div>
+    </section>
 
+    <section class="about_section2 layout_padding">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="about_img-box2">
+            <img src="{{ url_for('static',filename='img/sign.png')}}" alt="">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="about_detail-box2">
+              <h3 class="text-uppercase">
+                Registrate!
+              </h3>
+              <p>
+                Registrate y comenta tus libros favoritos gratis :D
+              </p>
+              <a class="btn btn-primary" href="{{ url_for('signup') }}" role="button">Registrate</a>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about_section layout_padding">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="about_detail-box">
+              <h3 class="text-uppercase">
+                Api
+              </h3>
+              <p>
+                Necesitas ver tu libro en formato JSON? no te preocupes, aqui te lo damos :D
+              </p>
+              <a class="btn btn-primary" href="{{ url_for('api') }}" role="button">Api</a>
+              
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="about_img-box">
+            <img src="{{ url_for('static',filename='img/json.png')}}" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section>
+      <div class="results">
+        <h3 class="libss">
+          Algunos Libros que te pueden gustar :D
+        </h3>
+        
+        <hr class="xd">
+
+        <div class="boxs row">
+          {%if res%} {% for book in res %}
+          <div class="col-md-6">
+            <a href="{{url_for('book',isbn=book.isbn)}}">
+              <div class="mycard">
+                <blockquote class="blockquote mb-0">
+                  <p>
+                    {{book.title}} | {{book.author}}
+                  </p>
+                  <footer class="blockquote-footer">
+                    Publicado en {{book.year}} | ISBN {{book.isbn}}
+                  </footer>
+                </blockquote>
+              </div>
+            </a>
+          </div>
+          {%endfor%} {%endif%}
+        </div>
+      </div>
     </section>
 
 
