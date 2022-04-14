@@ -44,7 +44,24 @@
     .mycontainer {
       display: flex;
       justify-content: center;
+      margin: 0 1rem;
     }
+
+    .login-box {
+      max-width: 18rem;
+      background-color: #2727279c;
+      padding: 1.5rem;
+      box-shadow: -2px 4px 31px #00000069;
+  }
+
+  .right {
+    display: flex;
+    min-height: 80vh;
+    min-width: 20vh;
+    justify-content: center;
+    align-items: center;
+}
+
 }
 
 
