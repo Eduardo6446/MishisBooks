@@ -33,7 +33,10 @@ def ratingGoogleApi(isbn):
 
     count = response['items'][0]['volumeInfo']['ratingsCount']
     rating = response['items'][0]['volumeInfo']['averageRating']
-    return [count,rating]
+    description = response['items'][0]['volumeInfo']['description']
+    cat = response['items'][0]['volumeInfo']['categories']
+    imagen = response['items'][0]['volumeInfo']['imageLinks']['thumbnail']
+    return [count,rating,description,cat,imagen]
 
 def get_review_statistics(book_id,isbn):
     
@@ -127,7 +130,7 @@ def book(isbn):
         my_review = request.form.get('review')
         book_id = request.form.get('book_id')
         if my_review.strip()=="" or my_rating=="":
-            message = "Invalid Review"
+            message = "Reseña invalida"
         else:
             db.execute("insert into review (username, review, rating, book_id) select :username,:review,:rating,:book_id where not exists (select * from review where username = :username and book_id = :book_id);",
             {
@@ -161,12 +164,15 @@ def book(isbn):
         except:
             pass
     try:
-        count,rating = ratingGoogleApi(isbn)
+        count,rating,description,cat,imagen = ratingGoogleApi(isbn)
         
     except:
         error = True
         count,rating = 0,0
-    return render_template('book.html',obj_book=res,count=count,rating=rating,reviews=reviews,message=message,is_reviewed=is_reviewed,error=error)
+        description = "Sin descripción"
+        cat = "Sin categoría"
+        imagen = "https://cdn-icons-png.flaticon.com/512/580/580185.png"
+    return render_template('book.html',imagen=imagen,cat=cat,description=description,obj_book=res,count=count,rating=rating,reviews=reviews,message=message,is_reviewed=is_reviewed,error=error)
 
 
 
@@ -204,6 +210,11 @@ def logout():
     
     session.clear()
     return redirect(url_for("login"))
+
+
+@app.errorhandler(404)
+def notFound(e):
+    return render_template("404.html"),404
 
 
 if __name__ == '__main__':

@@ -9,6 +9,9 @@
 
 {%block template%}
 <link rel="stylesheet" href="{{ url_for('static',filename='css/book.css')}}" />
+<link rel="stylesheet" href="{{ url_for('static',filename='css/book1.css')}}" />
+
+
 <div class="main">
   <form action="/books">
     <div class="search-box">
@@ -34,6 +37,19 @@
       <div class="info">
         <h2>{{obj_book.title}}</h2>
         <p>{{obj_book.author}} | {{obj_book.year}} | {{obj_book.isbn}}</p>
+        <p>
+          Descripcion: {{description}}
+        </p>
+        <p>
+          categoria: {{cat}}
+        </p>
+        
+        <div class="box-out">
+          <div class="book books-1">
+            <img class="book books-2" src="{{imagen}}" alt="">
+          </div>
+        </div>
+        
       </div>
       {% if not(error) %}
       <div class="rating">

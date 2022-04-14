@@ -10,12 +10,18 @@ response = requests.get("https://www.googleapis.com/books/v1/volumes?q=isbn:"+is
 
 book = response['items'][0]['volumeInfo']['averageRating']
 book2 = response['items'][0]['volumeInfo']['ratingsCount']
-libroImage = response['items'][0]['volumeInfo']['description']
+des = response['items'][0]['volumeInfo']['description']
+cat = response['items'][0]['volumeInfo']['categories']
+imagen = response['items'][0]['volumeInfo']['imageLinks']['thumbnail']
+
+
 #count = book.get('ratingsCount')
 #rating = book.get('average_rating')
 print(book)
 print(book2)
-print(libroImage)
+print(des)
+print(cat)
+print(imagen)
 
 #book = book + 2
 #print(book)
